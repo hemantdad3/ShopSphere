@@ -76,7 +76,7 @@ Cart cleared (User cart emptied)
 | **Phase 6** | Checkout & Inventory Reservation | Atomic reservation, TTL worker, snapshots & pending orders | **COMPLETED** |
 | **Phase 7** | Razorpay Payment Integration & Webhook Reconciliation | Signature verification, idempotent handler & dual-path lock | **COMPLETED** |
 | **Phase 8** | Order Lifecycle & Cancellation Management | Order state machine, user history, admin actions & restock | **COMPLETED** |
-| **Phase 9** | Customer Reviews & Wishlist | Verified purchaser gating, atomic rating aggregation & wishlist | **NOT STARTED** |
+| **Phase 9** | Customer Reviews & Wishlist | Verified purchaser gating, atomic rating aggregation & wishlist | **COMPLETED** |
 | **Phase 10** | Admin Dashboard & Operational Metrics | Aggregation pipelines, sales metrics, inventory alerts | **NOT STARTED** |
 | **Phase 11** | Frontend Integration & UX Polish | React UI, clean aesthetic, Razorpay SDK & error/loading states | **NOT STARTED** |
 | **Phase 12** | Comprehensive Testing & Concurrency Verification | Unit, integration & high-concurrency overselling tests | **NOT STARTED** |
@@ -529,7 +529,7 @@ Cart cleared (User cart emptied)
 
 ## Phase 9 --- Customer Reviews & Wishlist
 
-- **Status:** NOT STARTED
+- **Status:** COMPLETED
 - **1. Objective:** Implement customer product reviews restricted strictly to verified buyers of delivered orders, automated recalculation of product ratings, and customer wishlist management.
 - **2. Why this phase exists:** Fake reviews destroy customer trust. Restricting reviews to verified purchasers who actually received the product (`DELIVERED` status) proves high data integrity. Wishlists enhance customer retention and discovery.
 - **3. Prerequisites:** Phase 8 completed.

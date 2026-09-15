@@ -10,6 +10,10 @@ const {
 const { productQuerySchema } = require('../validators/productQueryValidator');
 
 const router = express.Router();
+const reviewRoutes = require('./reviewRoutes');
+
+// Nested reviews endpoint (/api/products/:productId/reviews)
+router.use('/:productId/reviews', reviewRoutes);
 
 // Public Routes
 router.get('/', validate({ query: productQuerySchema }), productController.getAllProducts);

@@ -13,7 +13,8 @@
     "test:cart": "node tests/cartVerification.js",
     "test:order": "node tests/orderVerification.js",
     "test:payment": "node tests/paymentVerification.js",
-    "test:lifecycle": "node tests/orderLifecycleVerification.js"
+    "test:lifecycle": "node tests/orderLifecycleVerification.js",
+    "test:review": "node tests/reviewWishlistVerification.js"
   },
   "keywords": [
     "express",
