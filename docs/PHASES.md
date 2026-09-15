@@ -5,16 +5,17 @@
 - **Project:** ShopSphere (Single-Vendor Production-Oriented E-Commerce Platform)
 - **Primary Focus:** Backend Engineering Depth, Correctness, Security, Reliability & Maintainability
 - **Architecture:** Modular Monolith (Node.js/Express + MongoDB Atlas + React/Vite)
-- **Overall Progress:** 25%
-- **Current Phase:** Phase 4 --- Product Discovery: Search, Filter, Sort & Pagination
+- **Overall Progress:** 31%
+- **Current Phase:** Phase 5 --- Shopping Cart Engine
 - **Status Summary:**
   - Completed:
     - Phase 0 --- Project Planning & Repository Setup
     - Phase 1 --- Backend Foundation & Core Infrastructure (with MongoDB & Git Milestone)
     - Phase 2 --- Authentication & Authorization System
     - Phase 3 --- Category & Product Management (Catalog Core & Admin CRUD)
-  - In Progress: None
-  - Next: Phase 4 --- Product Discovery: Search, Filter, Sort & Pagination
+    - Phase 4 --- Product Discovery: Search, Filter, Sort & Pagination
+  - In Progress: Phase 5 --- Shopping Cart Engine
+  - Next: Phase 6 --- Checkout & Inventory Reservation Engine
 
 ---
 
@@ -67,8 +68,8 @@ Cart cleared (User cart emptied)
 | **Phase 1** | Backend Foundation & Core Infrastructure | Express app, DB connection, error handling & logging | **COMPLETED** |
 | **Phase 2** | Authentication & Authorization | JWT in HTTP-only cookies, bcrypt, RBAC & auth middleware | **COMPLETED** |
 | **Phase 3** | Category & Product Management | Catalog schema, Admin CRUD & Cloudinary image pipeline | **COMPLETED** |
-| **Phase 4** | Product Discovery: Search, Filter, Sort & Pagination | Public catalog API, compound indexing & query parsing | **NOT STARTED** |
-| **Phase 5** | Shopping Cart Engine | Cart model, authoritative server pricing & live validation | **NOT STARTED** |
+| **Phase 4** | Product Discovery: Search, Filter, Sort & Pagination | Public catalog API, compound indexing & query parsing | **COMPLETED** |
+| **Phase 5** | Shopping Cart Engine | Cart model, authoritative server pricing & live validation | **IN PROGRESS** |
 | **Phase 6** | Checkout & Inventory Reservation | Atomic reservation, TTL worker, snapshots & pending orders | **NOT STARTED** |
 | **Phase 7** | Razorpay Payment Integration & Webhook Reconciliation | Signature verification, idempotent handler & dual-path lock | **NOT STARTED** |
 | **Phase 8** | Order Lifecycle & Cancellation Management | Order state machine, user history, admin actions & restock | **NOT STARTED** |
@@ -261,7 +262,7 @@ Cart cleared (User cart emptied)
 
 ## Phase 4 --- Product Discovery: Search, Filter, Sort & Pagination
 
-- **Status:** NOT STARTED
+- **Status:** COMPLETED
 - **1. Objective:** Build high-performance public discovery APIs allowing customers to search, filter by category and price range, sort by various criteria, and paginate through product collections efficiently.
 - **2. Why this phase exists:** Customers must find products quickly without causing high database load. Proper compound indexing and query construction are essential backend competencies to prevent full-collection table scans (COLLSCAN).
 - **3. Prerequisites:** Phase 3 completed.
@@ -306,7 +307,7 @@ Cart cleared (User cart emptied)
 
 ## Phase 5 --- Shopping Cart Engine
 
-- **Status:** NOT STARTED
+- **Status:** IN PROGRESS
 - **1. Objective:** Build a persistent server-side shopping cart for authenticated users, enforcing real-time stock validation and authoritative server-side price calculation.
 - **2. Why this phase exists:** Client-side cart totals or prices cannot be trusted. A customer could alter local storage to purchase a ₹10,000 item for ₹1. The backend must be the sole authority for pricing and product availability.
 - **3. Prerequisites:** Phase 3 and Phase 4 completed.

@@ -7,11 +7,12 @@ const {
   createProductSchema,
   updateProductSchema,
 } = require('../validators/productValidator');
+const { productQuerySchema } = require('../validators/productQueryValidator');
 
 const router = express.Router();
 
 // Public Routes
-router.get('/', productController.getAllProducts);
+router.get('/', validate({ query: productQuerySchema }), productController.getAllProducts);
 router.get('/:idOrSlug', productController.getProductByIdOrSlug);
 
 // Admin-Only Routes

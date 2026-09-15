@@ -1,9 +1,11 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const mongoose = require('mongoose');
 const User = require('../src/models/User');
 const Category = require('../src/models/Category');
 const Product = require('../src/models/Product');
 const { connectDB, disconnectDB } = require('../src/config/db');
+const app = require('../src/app');
 
 const BASE_URL = 'http://localhost:5000/api';
 
@@ -14,6 +16,7 @@ const runTests = async () => {
 
   let passed = 0;
   let failed = 0;
+  let localServer = null;
 
   const assert = (condition, testName, details = '') => {
     if (condition) {
@@ -27,6 +30,14 @@ const runTests = async () => {
 
   try {
     await connectDB();
+
+    try {
+      const ping = await fetch(`${BASE_URL}/health`);
+      if (!ping.ok) throw new Error('Not running');
+    } catch {
+      localServer = app.listen(5000);
+      await new Promise((res) => setTimeout(res, 500));
+    }
 
     // 1. Setup Admin and Customer Users
     const adminEmail = `admin_${Date.now()}@shopsphere.com`;
@@ -266,6 +277,7 @@ const runTests = async () => {
     console.log(`TEST SUMMARY: ${passed} Passed, ${failed} Failed`);
     console.log('======================================================\n');
 
+    if (localServer) localServer.close();
     await disconnectDB();
 
     if (failed > 0) {
@@ -275,6 +287,7 @@ const runTests = async () => {
     }
   } catch (err) {
     console.error('Fatal error during test run:', err);
+    if (localServer) localServer.close();
     await disconnectDB();
     process.exit(1);
   }

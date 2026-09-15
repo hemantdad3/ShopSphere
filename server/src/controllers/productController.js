@@ -1,22 +1,90 @@
 const mongoose = require('mongoose');
 const Product = require('../models/Product');
 const Category = require('../models/Category');
+const APIFeatures = require('../utils/apiFeatures');
 const { NotFoundError, BadRequestError } = require('../utils/AppError');
 const { sendSuccess } = require('../utils/apiResponse');
 const { uploadImage, deleteImage } = require('../services/imageService');
 
 /**
- * Get all active products (Public)
+ * Get all active products with Search, Category Filter, Price Range, Sorting, and Pagination
  * GET /api/products
  */
 const getAllProducts = async (req, res, next) => {
   try {
-    const filter = req.user && req.user.role === 'ADMIN' ? {} : { isActive: true };
-    const products = await Product.find(filter)
-      .populate('category', 'name slug')
-      .sort({ createdAt: -1 });
+    const baseFilter = req.user && req.user.role === 'ADMIN' ? {} : { isActive: true };
+    let categoryFilter = {};
 
-    return sendSuccess(res, { products, count: products.length }, 'Products retrieved successfully');
+    // 1. Resolve Category query if provided (supports slug or ObjectId)
+    if (req.query.category && req.query.category.trim()) {
+      const catParam = req.query.category.trim();
+      if (mongoose.isValidObjectId(catParam)) {
+        categoryFilter = { category: catParam };
+      } else {
+        const matchedCategory = await Category.findOne({
+          slug: catParam.toLowerCase(),
+          isActive: true,
+        });
+
+        if (matchedCategory) {
+          categoryFilter = { category: matchedCategory._id };
+        } else {
+          // Category slug does not exist: Return empty result set with valid pagination metadata
+          return sendSuccess(
+            res,
+            {
+              products: [],
+              pagination: {
+                total: 0,
+                page: Number(req.query.page) || 1,
+                limit: Number(req.query.limit) || 12,
+                totalPages: 0,
+                hasNextPage: false,
+                hasPrevPage: false,
+              },
+            },
+            'Products retrieved successfully'
+          );
+        }
+      }
+    }
+
+    // 2. Count total matching documents for pagination metadata (executes before skip/limit)
+    const countFeatures = new APIFeatures(Product.find(baseFilter), req.query)
+      .search()
+      .filter(categoryFilter);
+    const total = await countFeatures.query.countDocuments();
+
+    // 3. Execute search, filtering, sorting, and bounded pagination
+    const features = new APIFeatures(Product.find(baseFilter), req.query)
+      .search()
+      .filter(categoryFilter)
+      .sort()
+      .paginate();
+
+    const products = await features.query.populate('category', 'name slug');
+
+    // 4. Calculate pagination metadata
+    const { page, limit } = features.pagination;
+    const totalPages = total === 0 ? 0 : Math.ceil(total / limit);
+    const hasNextPage = page < totalPages;
+    const hasPrevPage = page > 1;
+
+    return sendSuccess(
+      res,
+      {
+        products,
+        pagination: {
+          total,
+          page,
+          limit,
+          totalPages,
+          hasNextPage,
+          hasPrevPage,
+        },
+      },
+      'Products retrieved successfully'
+    );
   } catch (err) {
     next(err);
   }
