@@ -6,7 +6,11 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "echo \"No tests specified yet\" && exit 0"
+    "seed": "node src/utils/seedData.js",
+    "test:auth": "node tests/authVerification.js",
+    "test:catalog": "node tests/catalogVerification.js",
+    "test:discovery": "node tests/discoveryVerification.js",
+    "test:cart": "node tests/cartVerification.js"
   },
   "keywords": [
     "express",
