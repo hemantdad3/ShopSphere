@@ -5,15 +5,16 @@
 - **Project:** ShopSphere (Single-Vendor Production-Oriented E-Commerce Platform)
 - **Primary Focus:** Backend Engineering Depth, Correctness, Security, Reliability & Maintainability
 - **Architecture:** Modular Monolith (Node.js/Express + MongoDB Atlas + React/Vite)
-- **Overall Progress:** 19%
-- **Current Phase:** Phase 3 --- Category & Product Management (Catalog Core & Admin CRUD)
+- **Overall Progress:** 25%
+- **Current Phase:** Phase 4 --- Product Discovery: Search, Filter, Sort & Pagination
 - **Status Summary:**
   - Completed:
     - Phase 0 --- Project Planning & Repository Setup
     - Phase 1 --- Backend Foundation & Core Infrastructure (with MongoDB & Git Milestone)
     - Phase 2 --- Authentication & Authorization System
+    - Phase 3 --- Category & Product Management (Catalog Core & Admin CRUD)
   - In Progress: None
-  - Next: Phase 3 --- Category & Product Management (Catalog Core & Admin CRUD)
+  - Next: Phase 4 --- Product Discovery: Search, Filter, Sort & Pagination
 
 ---
 
@@ -65,7 +66,7 @@ Cart cleared (User cart emptied)
 | **Phase 0** | Project Planning & Repository Setup | Workspace, tooling, directory structure & standards | **COMPLETED** |
 | **Phase 1** | Backend Foundation & Core Infrastructure | Express app, DB connection, error handling & logging | **COMPLETED** |
 | **Phase 2** | Authentication & Authorization | JWT in HTTP-only cookies, bcrypt, RBAC & auth middleware | **COMPLETED** |
-| **Phase 3** | Category & Product Management | Catalog schema, Admin CRUD & Cloudinary image pipeline | **NOT STARTED** |
+| **Phase 3** | Category & Product Management | Catalog schema, Admin CRUD & Cloudinary image pipeline | **COMPLETED** |
 | **Phase 4** | Product Discovery: Search, Filter, Sort & Pagination | Public catalog API, compound indexing & query parsing | **NOT STARTED** |
 | **Phase 5** | Shopping Cart Engine | Cart model, authoritative server pricing & live validation | **NOT STARTED** |
 | **Phase 6** | Checkout & Inventory Reservation | Atomic reservation, TTL worker, snapshots & pending orders | **NOT STARTED** |
@@ -209,7 +210,7 @@ Cart cleared (User cart emptied)
 
 ## Phase 3 --- Category & Product Management (Catalog Core & Admin CRUD)
 
-- **Status:** NOT STARTED
+- **Status:** COMPLETED
 - **1. Objective:** Build the category and product data models, administrative CRUD APIs, image upload integration (ImageKit / Cloudinary), and automated slug generation.
 - **2. Why this phase exists:** Products are the core commodity of the platform. Admins must manage the catalog, pricing, inventory levels, and rich image galleries with strict validation before customers can browse or buy.
 - **3. Prerequisites:** Phase 2 completed, ImageKit or Cloudinary credentials added to `server/.env`.

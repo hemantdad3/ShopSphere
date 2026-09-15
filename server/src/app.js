@@ -8,6 +8,8 @@ const errorHandler = require('./middleware/errorHandler');
 
 // Route Handlers
 const authRoutes = require('./routes/authRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
+const productRoutes = require('./routes/productRoutes');
 
 const app = express();
 
@@ -55,6 +57,8 @@ app.get('/api/health', (req, res) => {
 
 // API Route Mounts
 app.use('/api/auth', authRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/products', productRoutes);
 
 // Handle 404 for unmatched routes
 app.all('*', (req, res, next) => {
