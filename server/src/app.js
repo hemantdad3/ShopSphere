@@ -1,9 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const { isDBConnected } = require('./config/db');
 const { NotFoundError } = require('./utils/AppError');
 const errorHandler = require('./middleware/errorHandler');
+
+// Route Handlers
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -23,6 +27,7 @@ app.use(
 );
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+app.use(cookieParser());
 
 // Comprehensive Health Check Endpoint
 app.get('/api/health', (req, res) => {
@@ -47,6 +52,9 @@ app.get('/api/health', (req, res) => {
     },
   });
 });
+
+// API Route Mounts
+app.use('/api/auth', authRoutes);
 
 // Handle 404 for unmatched routes
 app.all('*', (req, res, next) => {

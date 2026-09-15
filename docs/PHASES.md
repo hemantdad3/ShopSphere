@@ -5,14 +5,15 @@
 - **Project:** ShopSphere (Single-Vendor Production-Oriented E-Commerce Platform)
 - **Primary Focus:** Backend Engineering Depth, Correctness, Security, Reliability & Maintainability
 - **Architecture:** Modular Monolith (Node.js/Express + MongoDB Atlas + React/Vite)
-- **Overall Progress:** 12%
-- **Current Phase:** Phase 2 --- Authentication & Authorization System
+- **Overall Progress:** 19%
+- **Current Phase:** Phase 3 --- Category & Product Management (Catalog Core & Admin CRUD)
 - **Status Summary:**
   - Completed:
     - Phase 0 --- Project Planning & Repository Setup
     - Phase 1 --- Backend Foundation & Core Infrastructure (with MongoDB & Git Milestone)
+    - Phase 2 --- Authentication & Authorization System
   - In Progress: None
-  - Next: Phase 2 --- Authentication & Authorization System
+  - Next: Phase 3 --- Category & Product Management (Catalog Core & Admin CRUD)
 
 ---
 
@@ -63,7 +64,7 @@ Cart cleared (User cart emptied)
 |---|---|---|---|
 | **Phase 0** | Project Planning & Repository Setup | Workspace, tooling, directory structure & standards | **COMPLETED** |
 | **Phase 1** | Backend Foundation & Core Infrastructure | Express app, DB connection, error handling & logging | **COMPLETED** |
-| **Phase 2** | Authentication & Authorization | JWT in HTTP-only cookies, bcrypt, RBAC & auth middleware | **NOT STARTED** |
+| **Phase 2** | Authentication & Authorization | JWT in HTTP-only cookies, bcrypt, RBAC & auth middleware | **COMPLETED** |
 | **Phase 3** | Category & Product Management | Catalog schema, Admin CRUD & Cloudinary image pipeline | **NOT STARTED** |
 | **Phase 4** | Product Discovery: Search, Filter, Sort & Pagination | Public catalog API, compound indexing & query parsing | **NOT STARTED** |
 | **Phase 5** | Shopping Cart Engine | Cart model, authoritative server pricing & live validation | **NOT STARTED** |
@@ -156,7 +157,7 @@ Cart cleared (User cart emptied)
 
 ## Phase 2 --- Authentication & Authorization System
 
-- **Status:** NOT STARTED
+- **Status:** COMPLETED
 - **1. Objective:** Implement secure authentication and role-based access control (RBAC) using JWTs transmitted exclusively via HTTP-only, SameSite cookies, password hashing with bcrypt, and complete user profile management.
 - **2. Why this phase exists:** Security starts at authentication. Storing tokens in `localStorage` exposes users to XSS token theft. Using HTTP-only cookies combined with strict backend role verification guarantees that privileged actions (e.g. admin catalog modifications) cannot be bypassed.
 - **3. Prerequisites:** Phase 1 completed.
