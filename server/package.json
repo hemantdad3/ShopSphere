@@ -11,7 +11,8 @@
     "test:catalog": "node tests/catalogVerification.js",
     "test:discovery": "node tests/discoveryVerification.js",
     "test:cart": "node tests/cartVerification.js",
-    "test:order": "node tests/orderVerification.js"
+    "test:order": "node tests/orderVerification.js",
+    "test:payment": "node tests/paymentVerification.js"
   },
   "keywords": [
     "express",
@@ -33,6 +34,7 @@
     "morgan": "^1.12.1",
     "multer": "^2.4.0",
     "nodemailer": "^10.0.10",
+    "razorpay": "^2.9.8",
     "slugify": "^1.6.9",
     "zod": "^4.6.5"
   },
