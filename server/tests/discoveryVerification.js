@@ -142,8 +142,8 @@ const runTests = async () => {
       'Search for "Headphones" matches products case-insensitively across name and description'
     );
 
-    // Search matching description specifically
-    const descSearchRes = await fetch(`${BASE_URL}?search=maintainable`);
+    // Search matching description specifically within test category
+    const descSearchRes = await fetch(`${BASE_URL}?search=maintainable&category=${bookCat.slug}`);
     const descSearchData = await descSearchRes.json();
     assert(
       descSearchData.data.products.length === 1 &&
@@ -206,8 +206,8 @@ const runTests = async () => {
     // Test 4: Price Range Filtering
     // ----------------------------------------------------
     console.log('\n[4] Testing Price Range Filtering...');
-    // minPrice filter
-    const minPriceRes = await fetch(`${BASE_URL}?minPrice=20000`);
+    // minPrice filter within test category
+    const minPriceRes = await fetch(`${BASE_URL}?minPrice=20000&category=${techCat.slug}`);
     const minPriceData = await minPriceRes.json();
     assert(
       minPriceData.data.products.length === 2 &&
@@ -215,8 +215,8 @@ const runTests = async () => {
       'minPrice=20000 returns only products with price >= 20000'
     );
 
-    // maxPrice filter
-    const maxPriceRes = await fetch(`${BASE_URL}?maxPrice=2000`);
+    // maxPrice filter within test category
+    const maxPriceRes = await fetch(`${BASE_URL}?maxPrice=2000&category=${bookCat.slug}`);
     const maxPriceData = await maxPriceRes.json();
     assert(
       maxPriceData.data.products.length === 2 &&

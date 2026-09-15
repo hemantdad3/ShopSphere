@@ -75,7 +75,7 @@ Cart cleared (User cart emptied)
 | **Phase 5** | Shopping Cart Engine | Cart model, authoritative server pricing & live validation | **COMPLETED** |
 | **Phase 6** | Checkout & Inventory Reservation | Atomic reservation, TTL worker, snapshots & pending orders | **COMPLETED** |
 | **Phase 7** | Razorpay Payment Integration & Webhook Reconciliation | Signature verification, idempotent handler & dual-path lock | **COMPLETED** |
-| **Phase 8** | Order Lifecycle & Cancellation Management | Order state machine, user history, admin actions & restock | **IN PROGRESS** |
+| **Phase 8** | Order Lifecycle & Cancellation Management | Order state machine, user history, admin actions & restock | **COMPLETED** |
 | **Phase 9** | Customer Reviews & Wishlist | Verified purchaser gating, atomic rating aggregation & wishlist | **NOT STARTED** |
 | **Phase 10** | Admin Dashboard & Operational Metrics | Aggregation pipelines, sales metrics, inventory alerts | **NOT STARTED** |
 | **Phase 11** | Frontend Integration & UX Polish | React UI, clean aesthetic, Razorpay SDK & error/loading states | **NOT STARTED** |
@@ -479,7 +479,7 @@ Cart cleared (User cart emptied)
 
 ## Phase 8 --- Order Lifecycle & Cancellation Management
 
-- **Status:** IN PROGRESS
+- **Status:** COMPLETED
 - **1. Objective:** Implement complete order state machine (`PENDING_PAYMENT → CONFIRMED → SHIPPED → DELIVERED` and `CANCELLED`), order tracking, user order history, and safe cancellation with stock restitution.
 - **2. Why this phase exists:** E-commerce operations require clear transitions. Customers need to track packages and cancel eligible orders; admins need to update fulfillment status; inventory must be accurately restocked if an order is cancelled.
 - **3. Prerequisites:** Phase 7 completed.

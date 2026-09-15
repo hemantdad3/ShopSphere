@@ -12,7 +12,8 @@
     "test:discovery": "node tests/discoveryVerification.js",
     "test:cart": "node tests/cartVerification.js",
     "test:order": "node tests/orderVerification.js",
-    "test:payment": "node tests/paymentVerification.js"
+    "test:payment": "node tests/paymentVerification.js",
+    "test:lifecycle": "node tests/orderLifecycleVerification.js"
   },
   "keywords": [
     "express",

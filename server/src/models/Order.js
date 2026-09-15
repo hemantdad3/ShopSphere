@@ -178,6 +178,30 @@ const orderSchema = new mongoose.Schema(
       type: paymentDetailsSchema,
       default: {},
     },
+    carrier: {
+      type: String,
+      trim: true,
+    },
+    trackingNumber: {
+      type: String,
+      trim: true,
+    },
+    shippedAt: {
+      type: Date,
+    },
+    deliveredAt: {
+      type: Date,
+    },
+    refundDetails: {
+      refundId: { type: String },
+      amount: { type: Number },
+      status: {
+        type: String,
+        enum: ['NONE', 'PENDING', 'PROCESSED', 'FAILED'],
+        default: 'NONE',
+      },
+      refundedAt: { type: Date },
+    },
     reservationExpiresAt: {
       type: Date,
       required: [true, 'Reservation expiration date is required'],
