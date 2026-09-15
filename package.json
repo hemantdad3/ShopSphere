@@ -1,0 +1,24 @@
+{
+  "name": "shopsphere-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ShopSphere - Production-oriented single-vendor e-commerce platform",
+  "scripts": {
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "start:server": "npm --prefix server start",
+    "build:client": "npm --prefix client run build",
+    "install:server": "npm --prefix server install",
+    "install:client": "npm --prefix client install",
+    "install:all": "npm install && npm --prefix server install && npm --prefix client install"
+  },
+  "keywords": [
+    "ecommerce",
+    "express",
+    "react",
+    "mongodb",
+    "razorpay"
+  ],
+  "author": "",
+  "license": "ISC"
+}
