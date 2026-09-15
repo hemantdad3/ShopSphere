@@ -1,6 +1,10 @@
 require('dotenv').config();
 const app = require('./app');
 const { connectDB, disconnectDB } = require('./config/db');
+const {
+  startReservationCleanupWorker,
+  stopReservationCleanupWorker,
+} = require('./workers/reservationCleanupWorker');
 
 const PORT = process.env.PORT || 5000;
 let server;
@@ -20,6 +24,9 @@ const startServer = async () => {
       );
       console.log(`[ShopSphere API] Health endpoint ready at: http://localhost:${PORT}/api/health`);
     });
+
+    // 3. Start background reservation TTL worker
+    startReservationCleanupWorker();
   } catch (err) {
     console.error('[ShopSphere API] Failed to start server:', err.message);
     process.exit(1);
@@ -31,6 +38,9 @@ const startServer = async () => {
  */
 const gracefulShutdown = async (signal) => {
   console.log(`\n[ShopSphere API] Received ${signal}. Initiating graceful shutdown...`);
+
+  // Stop background workers
+  stopReservationCleanupWorker();
 
   if (server) {
     server.close(async () => {

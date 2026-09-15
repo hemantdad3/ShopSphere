@@ -10,7 +10,8 @@
     "test:auth": "node tests/authVerification.js",
     "test:catalog": "node tests/catalogVerification.js",
     "test:discovery": "node tests/discoveryVerification.js",
-    "test:cart": "node tests/cartVerification.js"
+    "test:cart": "node tests/cartVerification.js",
+    "test:order": "node tests/orderVerification.js"
   },
   "keywords": [
     "express",
