@@ -5,8 +5,8 @@
 - **Project:** ShopSphere (Single-Vendor Production-Oriented E-Commerce Platform)
 - **Primary Focus:** Backend Engineering Depth, Correctness, Security, Reliability & Maintainability
 - **Architecture:** Modular Monolith (Node.js/Express + MongoDB Atlas + React/Vite)
-- **Overall Progress:** 31%
-- **Current Phase:** Phase 5 --- Shopping Cart Engine
+- **Overall Progress:** 38%
+- **Current Phase:** Phase 6 --- Checkout & Inventory Reservation Engine
 - **Status Summary:**
   - Completed:
     - Phase 0 --- Project Planning & Repository Setup
@@ -14,8 +14,9 @@
     - Phase 2 --- Authentication & Authorization System
     - Phase 3 --- Category & Product Management (Catalog Core & Admin CRUD)
     - Phase 4 --- Product Discovery: Search, Filter, Sort & Pagination
-  - In Progress: Phase 5 --- Shopping Cart Engine
-  - Next: Phase 6 --- Checkout & Inventory Reservation Engine
+    - Phase 5 --- Shopping Cart Engine
+  - In Progress: Phase 6 --- Checkout & Inventory Reservation Engine
+  - Next: Phase 7 --- Razorpay Payment Integration & Webhook Reconciliation
 
 ---
 
@@ -69,8 +70,8 @@ Cart cleared (User cart emptied)
 | **Phase 2** | Authentication & Authorization | JWT in HTTP-only cookies, bcrypt, RBAC & auth middleware | **COMPLETED** |
 | **Phase 3** | Category & Product Management | Catalog schema, Admin CRUD & Cloudinary image pipeline | **COMPLETED** |
 | **Phase 4** | Product Discovery: Search, Filter, Sort & Pagination | Public catalog API, compound indexing & query parsing | **COMPLETED** |
-| **Phase 5** | Shopping Cart Engine | Cart model, authoritative server pricing & live validation | **IN PROGRESS** |
-| **Phase 6** | Checkout & Inventory Reservation | Atomic reservation, TTL worker, snapshots & pending orders | **NOT STARTED** |
+| **Phase 5** | Shopping Cart Engine | Cart model, authoritative server pricing & live validation | **COMPLETED** |
+| **Phase 6** | Checkout & Inventory Reservation | Atomic reservation, TTL worker, snapshots & pending orders | **IN PROGRESS** |
 | **Phase 7** | Razorpay Payment Integration & Webhook Reconciliation | Signature verification, idempotent handler & dual-path lock | **NOT STARTED** |
 | **Phase 8** | Order Lifecycle & Cancellation Management | Order state machine, user history, admin actions & restock | **NOT STARTED** |
 | **Phase 9** | Customer Reviews & Wishlist | Verified purchaser gating, atomic rating aggregation & wishlist | **NOT STARTED** |
@@ -307,7 +308,7 @@ Cart cleared (User cart emptied)
 
 ## Phase 5 --- Shopping Cart Engine
 
-- **Status:** IN PROGRESS
+- **Status:** COMPLETED
 - **1. Objective:** Build a persistent server-side shopping cart for authenticated users, enforcing real-time stock validation and authoritative server-side price calculation.
 - **2. Why this phase exists:** Client-side cart totals or prices cannot be trusted. A customer could alter local storage to purchase a ₹10,000 item for ₹1. The backend must be the sole authority for pricing and product availability.
 - **3. Prerequisites:** Phase 3 and Phase 4 completed.
@@ -359,7 +360,7 @@ Cart cleared (User cart emptied)
 
 ## Phase 6 --- Checkout & Inventory Reservation
 
-- **Status:** NOT STARTED
+- **Status:** IN PROGRESS
 - **1. Objective:** Build the checkout workflow with atomic multi-item inventory reservation, prevention of overselling under high concurrency, 15-minute reservation TTL expiration, and order snapshot persistence.
 - **2. Why this phase exists:** This is the most critical backend reliability phase. If two users attempt to buy the last unit of a product simultaneously, a naive "read-then-update" approach causes overselling. We must guarantee atomic reservation, automatic expiration of abandoned carts, and immutable historical price/address snapshots.
 - **3. Prerequisites:** Phase 5 completed.
