@@ -15,7 +15,11 @@
     "test:payment": "node tests/paymentVerification.js",
     "test:lifecycle": "node tests/orderLifecycleVerification.js",
     "test:review": "node tests/reviewWishlistVerification.js",
-    "test:admin": "node tests/adminDashboardVerification.js"
+    "test:admin": "node tests/adminDashboardVerification.js",
+    "test:unit": "node tests/unit/runUnitTests.js",
+    "test:concurrency": "node tests/concurrency/runConcurrencyTests.js",
+    "test:all": "node tests/runAllTests.js",
+    "test": "node tests/runAllTests.js"
   },
   "keywords": [
     "express",

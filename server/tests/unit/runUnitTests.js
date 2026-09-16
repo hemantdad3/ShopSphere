@@ -1,0 +1,48 @@
+const runSecurityUnitTests = require('./securityUtils.test');
+const runCartCalculationUnitTests = require('./cartCalculation.test');
+const runValidationUnitTests = require('./validationSchemas.test');
+
+const runAllUnitTests = async () => {
+  console.log('\n================================================================');
+  console.log('             SHOPSPHERE MASTER UNIT TEST HARNESS');
+  console.log('================================================================\n');
+
+  const startTime = Date.now();
+  let totalPassed = 0;
+  let totalFailed = 0;
+
+  const results = [];
+  results.push(await runSecurityUnitTests());
+  results.push(await runCartCalculationUnitTests());
+  results.push(await runValidationUnitTests());
+
+  for (const res of results) {
+    totalPassed += res.passed;
+    totalFailed += res.failed;
+  }
+
+  const durationSec = ((Date.now() - startTime) / 1000).toFixed(2);
+
+  console.log('\n================================================================');
+  console.log('             UNIT SUITE AGGREGATED SUMMARY');
+  console.log('================================================================');
+  for (const res of results) {
+    const status = res.failed === 0 ? '✔ PASS' : '❌ FAIL';
+    console.log(`  ${status} [${res.suite}]: ${res.passed} passed, ${res.failed} failed`);
+  }
+  console.log('----------------------------------------------------------------');
+  console.log(`TOTAL: ${totalPassed} Passed, ${totalFailed} Failed in ${durationSec}s`);
+  console.log('================================================================\n');
+
+  if (totalFailed > 0) {
+    process.exit(1);
+  } else {
+    process.exit(0);
+  }
+};
+
+if (require.main === module) {
+  runAllUnitTests();
+}
+
+module.exports = runAllUnitTests;
