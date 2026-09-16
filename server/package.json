@@ -14,7 +14,8 @@
     "test:order": "node tests/orderVerification.js",
     "test:payment": "node tests/paymentVerification.js",
     "test:lifecycle": "node tests/orderLifecycleVerification.js",
-    "test:review": "node tests/reviewWishlistVerification.js"
+    "test:review": "node tests/reviewWishlistVerification.js",
+    "test:admin": "node tests/adminDashboardVerification.js"
   },
   "keywords": [
     "express",
