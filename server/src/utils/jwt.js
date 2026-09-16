@@ -25,11 +25,14 @@ const sendTokenCookie = (user, statusCode, req, res, message = 'Success') => {
   // Parse expiration days from environment or default to 7 days
   const cookieExpiresDays = parseInt(process.env.JWT_COOKIE_EXPIRES_IN, 10) || 7;
 
+  const isProduction = process.env.NODE_ENV === 'production';
   const cookieOptions = {
     expires: new Date(Date.now() + cookieExpiresDays * 24 * 60 * 60 * 1000),
     httpOnly: true, // Invariant: immune to XSS token theft
-    secure: req.secure || req.headers['x-forwarded-proto'] === 'https' || process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    secure: isProduction || req.secure || req.headers['x-forwarded-proto'] === 'https',
+    sameSite: isProduction ? 'none' : 'lax',
+    path: '/',
+    ...(isProduction && { partitioned: true }), // CHIPS: Partitioned cookies for cross-site iframe/subdomain compatibility
   };
 
   res.cookie('jwt', token, cookieOptions);
@@ -54,11 +57,14 @@ const sendTokenCookie = (user, statusCode, req, res, message = 'Success') => {
  * Clear authentication cookie
  */
 const clearTokenCookie = (res) => {
+  const isProduction = process.env.NODE_ENV === 'production';
   res.cookie('jwt', 'loggedout', {
     expires: new Date(Date.now() + 5 * 1000), // Expire in 5 seconds
     httpOnly: true,
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    secure: process.env.NODE_ENV === 'production',
+    sameSite: isProduction ? 'none' : 'lax',
+    secure: isProduction,
+    path: '/',
+    ...(isProduction && { partitioned: true }),
   });
 };
 
