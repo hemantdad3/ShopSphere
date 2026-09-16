@@ -10,7 +10,7 @@ const { sendSuccess } = require('../utils/apiResponse');
 const getAllCategories = async (req, res, next) => {
   try {
     const filter = req.user && req.user.role === 'ADMIN' ? {} : { isActive: true };
-    const categories = await Category.find(filter).sort({ name: 1 });
+    const categories = await Category.find(filter).sort({ name: 1 }).lean();
 
     return sendSuccess(res, { categories, count: categories.length }, 'Categories fetched successfully');
   } catch (err) {
@@ -24,7 +24,7 @@ const getAllCategories = async (req, res, next) => {
  */
 const getCategoryBySlug = async (req, res, next) => {
   try {
-    const category = await Category.findOne({ slug: req.params.slug, isActive: true });
+    const category = await Category.findOne({ slug: req.params.slug, isActive: true }).lean();
     if (!category) {
       return next(new NotFoundError(`Category with slug '${req.params.slug}' not found`));
     }

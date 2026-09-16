@@ -34,6 +34,14 @@ async function request(endpoint, options = {}) {
   }
 
   if (!response.ok) {
+    if (response.status === 429) {
+      const error = new Error(
+        data?.message || 'Too many requests. Please slow down and try again in a few moments.'
+      );
+      error.status = 429;
+      error.code = data?.code || 'TOO_MANY_REQUESTS';
+      throw error;
+    }
     const errorMsg = data?.message || `Request failed with status ${response.status}`;
     const error = new Error(errorMsg);
     error.status = response.status;

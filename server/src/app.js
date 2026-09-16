@@ -6,6 +6,9 @@ const { isDBConnected } = require('./config/db');
 const { NotFoundError } = require('./utils/AppError');
 const errorHandler = require('./middleware/errorHandler');
 
+const { configureHelmet, noSqlSanitizer, xssSanitizer } = require('./middleware/security');
+const { apiLimiter } = require('./middleware/rateLimiter');
+
 // Route Handlers
 const authRoutes = require('./routes/authRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
@@ -19,20 +22,34 @@ const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
 
-// HTTP Request Logging
+// Trust reverse proxy for accurate client IP rate limiting
+app.set('trust proxy', 1);
+
+// Disable server technology fingerprinting
+app.disable('x-powered-by');
+
+// 1. Helmet Security Headers
+app.use(configureHelmet());
+
+// 2. HTTP Request Logging
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 } else {
   app.use(morgan('combined'));
 }
 
-// Security & Parsing Middleware
+// 3. CORS Configuration
 app.use(
   cors({
     origin: process.env.CLIENT_URL || 'http://localhost:5173',
     credentials: true,
   })
 );
+
+// 4. Rate Limiting for all /api endpoints
+app.use('/api', apiLimiter);
+
+// 5. Body Parsing with Raw Body Preservation for Webhooks
 app.use(
   express.json({
     limit: '10kb',
@@ -43,6 +60,10 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(cookieParser());
+
+// 6. Injection & Input Sanitization
+app.use(noSqlSanitizer);
+app.use(xssSanitizer);
 
 // Comprehensive Health Check Endpoint
 app.get('/api/health', (req, res) => {

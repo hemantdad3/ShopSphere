@@ -9,14 +9,15 @@ const {
   resetPasswordSchema,
 } = require('../validators/authValidator');
 const { sendSuccess } = require('../utils/apiResponse');
+const { authLimiter } = require('../middleware/rateLimiter');
 
 const router = express.Router();
 
-// Public Authentication Routes
-router.post('/register', validate({ body: registerSchema }), authController.register);
-router.post('/login', validate({ body: loginSchema }), authController.login);
+// Public Authentication Routes (Guarded by strict authLimiter)
+router.post('/register', authLimiter, validate({ body: registerSchema }), authController.register);
+router.post('/login', authLimiter, validate({ body: loginSchema }), authController.login);
 router.post('/logout', authController.logout);
-router.post('/forgot-password', validate({ body: forgotPasswordSchema }), authController.forgotPassword);
+router.post('/forgot-password', authLimiter, validate({ body: forgotPasswordSchema }), authController.forgotPassword);
 router.post('/reset-password/:token', validate({ body: resetPasswordSchema }), authController.resetPassword);
 
 // Protected Routes (Requires valid JWT)

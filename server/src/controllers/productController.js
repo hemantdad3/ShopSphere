@@ -62,7 +62,13 @@ const getAllProducts = async (req, res, next) => {
       .sort()
       .paginate();
 
-    const products = await features.query.populate('category', 'name slug');
+    const products = await features.query.populate('category', 'name slug').lean();
+
+    // Attach virtual finalPrice on lean documents
+    const formattedProducts = products.map((p) => ({
+      ...p,
+      finalPrice: p.discount > 0 ? Math.round(p.price * (1 - p.discount / 100)) : p.price,
+    }));
 
     // 4. Calculate pagination metadata
     const { page, limit } = features.pagination;
@@ -73,7 +79,7 @@ const getAllProducts = async (req, res, next) => {
     return sendSuccess(
       res,
       {
-        products,
+        products: formattedProducts,
         pagination: {
           total,
           page,
@@ -100,16 +106,19 @@ const getProductByIdOrSlug = async (req, res, next) => {
     let product;
 
     if (mongoose.isValidObjectId(idOrSlug)) {
-      product = await Product.findById(idOrSlug).populate('category', 'name slug');
+      product = await Product.findById(idOrSlug).populate('category', 'name slug').lean();
     }
 
     if (!product) {
-      product = await Product.findOne({ slug: idOrSlug, isActive: true }).populate('category', 'name slug');
+      product = await Product.findOne({ slug: idOrSlug, isActive: true }).populate('category', 'name slug').lean();
     }
 
     if (!product) {
       return next(new NotFoundError(`Product '${idOrSlug}' not found`));
     }
+
+    product.finalPrice =
+      product.discount > 0 ? Math.round(product.price * (1 - product.discount / 100)) : product.price;
 
     return sendSuccess(res, { product }, 'Product details retrieved successfully');
   } catch (err) {

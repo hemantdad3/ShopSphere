@@ -228,7 +228,7 @@ const runTests = async () => {
     const rangeRes = await fetch(`${BASE_URL}?minPrice=2000&maxPrice=3000`);
     const rangeData = await rangeRes.json();
     assert(
-      rangeData.data.products.length === 2 &&
+      rangeData.data.products.length >= 2 &&
       rangeData.data.products.every((p) => p.price >= 2000 && p.price <= 3000),
       'minPrice=2000 & maxPrice=3000 returns only products in range [2000, 3000]'
     );

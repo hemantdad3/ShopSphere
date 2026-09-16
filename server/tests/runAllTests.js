@@ -62,6 +62,11 @@ const SUITES = [
     file: path.resolve(__dirname, 'concurrency/paymentIdempotency.test.js'),
     category: 'CONCURRENCY',
   },
+  {
+    name: 'Phase 13: Security Hardening, NoSQL Injection & Rate Limiting Verification',
+    file: path.resolve(__dirname, 'securityVerification.js'),
+    category: 'SECURITY',
+  },
 ];
 
 const runChildSuite = (suite) => {

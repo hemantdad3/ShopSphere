@@ -7,13 +7,14 @@ const {
   cancelOrderSchema,
   updateOrderStatusSchema,
 } = require('../validators/orderLifecycleValidator');
+const { checkoutLimiter } = require('../middleware/rateLimiter');
 
 const router = express.Router();
 
 // All order endpoints require authentication
 router.use(protect);
 
-router.post('/checkout', validate({ body: checkoutSchema }), orderController.checkout);
+router.post('/checkout', checkoutLimiter, validate({ body: checkoutSchema }), orderController.checkout);
 router.get('/my-orders', orderController.getMyOrders);
 
 // Admin-only global order listing (placed before /:id to avoid param capture)
