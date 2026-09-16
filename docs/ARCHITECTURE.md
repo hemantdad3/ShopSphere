@@ -145,3 +145,40 @@ workloads. - Introduce a queue for email/notification jobs. - Use
 CDN/image optimization. - Scale API instances horizontally. - Move
 search to a dedicated search service only when query scale justifies
 it. - Split services only around clear scaling/ownership boundaries.
+
+## 9. Database Entity-Relationship (ER) Architecture
+
+```text
+┌─────────────────┐       1:1       ┌─────────────────┐
+│      User       │ ─────────────── │      Cart       │
+│  - _id          │                 │  - _id          │
+│  - email (uniq) │                 │  - user (ref)   │
+│  - role         │                 │  - items []     │
+│  - isBlocked    │                 └─────────────────┘
+└────────┬────────┘
+         │
+         │ 1:N
+         ├──────────────────────────┐
+         │                          │
+         ▼                          ▼
+┌─────────────────┐        ┌─────────────────┐
+│      Order      │        │     Review      │
+│  - _id          │        │  - _id          │
+│  - customer     │        │  - user (ref)   │
+│  - items []     │        │  - product (ref)│
+│    (snapshot)   │        │  - rating (1-5) │
+│  - status (FSM) │        │  - isVerified   │
+│  - paymentStatus│        └────────┬────────┘
+└─────────────────┘                 │
+                                    │ N:1
+                                    ▼
+┌─────────────────┐  N:1   ┌─────────────────┐
+│    Category     │ ◄───── │     Product     │
+│  - _id          │        │  - _id          │
+│  - name         │        │  - title / slug │
+│  - slug (uniq)  │        │  - category     │
+│  - isActive     │        │  - stock ($inc) │
+└─────────────────┘        │  - ratingsAvg   │
+                           │  - numReviews   │
+                           └─────────────────┘
+```
